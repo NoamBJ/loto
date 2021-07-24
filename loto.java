@@ -9,8 +9,8 @@ public class loto {
     int[] array = new int[5];
     int[] grilleLoto = new int[5];
     joueur[] Joueur = new joueur[num()];
-    private final int mise = a * 2;
-    private int g = 0;
+    private int mise = a * 2;
+    private int g;
 
     public int num() {
         return a;
@@ -36,6 +36,7 @@ public class loto {
         return mise;
     }
 
+    // créé la grille gagnante du Loto
     public int[] gridLoto() {
         for (int i = 0; i < grilleLoto.length; i++) {
             grilleLoto[i] = (int) (Math.random() * 50 + 1);
@@ -52,17 +53,32 @@ public class loto {
         return grilleLoto;
     }
 
+    // affiche la grille gagnante du Loto
     public void afficheLoto() {
         System.out.println(Arrays.toString(gridLoto()));
     }
 
-    public void checkWinner() {
+    public double calculateSomme(int g) {
+        double somme = 0;
 
-        int somme;
-        // double for pour regarder si i=j et stocker dans une variable ++ dès qu'il le
-        // rencontre
-        // final int somme et puis pour chaque gagnant 1,2,3,4 varibale depuis somme
-        // avec Math.pow mais en dehors du double for je pense
+        if (g == 0) {
+            somme = somme;
+        } else if (g == 1) {
+            somme = (double) mise / 32;
+        } else if (g == 2) {
+            somme = (double) mise / 16;
+        } else if (g == 3) {
+            somme = (double) mise / 8;
+        } else if (g == 4) {
+            somme = (double) mise / 4;
+        } else if (g == 5) {
+            somme = (double) mise / 2;
+        }
+        return somme;
+    }
+
+    public void checkWinner() {
+        g = 0;
 
         for (int i = 0; i < a; i++) {
             for (int j = 0; j < array.length; j++) {
@@ -72,27 +88,9 @@ public class loto {
                     }
                 }
             }
-            if (g == 1) {
-                somme = mise / 32;
-                System.out.println("Bravo " + Joueur[i].getNom() + ", vous avez " + g
-                        + " nombre en commun avec la grille du loto et vous avez donc remporté " + somme + " €");
-            } else if (g == 2) {
-                somme = mise / 16;
-                System.out.println("Bravo " + Joueur[i].getNom() + ", vous avez " + g
-                        + " nombre en commun avec la grille du loto et vous avez donc remporté " + somme + " €");
-            } else if (g == 3) {
-                somme = mise / 8;
-                System.out.println("Bravo " + Joueur[i].getNom() + ", vous avez " + g
-                        + " nombre en commun avec la grille du loto et vous avez donc remporté " + somme + " €");
-            } else if (g == 4) {
-                somme = mise / 4;
-                System.out.println("Bravo " + Joueur[i].getNom() + ", vous avez " + g
-                        + " nombre en commun avec la grille du loto et vous avez donc remporté " + somme + " €");
-            } else if (g == 5) {
-                somme = mise / 2;
-                System.out.println("Bravo " + Joueur[i].getNom() + ", vous avez " + g
-                        + " nombre en commun avec la grille du loto et vous avez donc remporté " + somme + " €");
-            }
+            System.out.println("Bravo " + Joueur[i].getNom() + ", vous avez " + g
+                    + " nombre en commun avec la grille du loto et vous avez donc remporté " + calculateSomme(g)
+                    + " €");
         }
 
     }
@@ -106,10 +104,7 @@ public class loto {
         Loto.gridLoto();
         Loto.afficheLoto();
 
-        while (a > 0) {
-            Loto.createPlayer();
-            a--;
-        }
+        Loto.createPlayer();
 
         Loto.checkWinner();
 
